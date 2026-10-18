@@ -8,7 +8,14 @@
 </head>
 <body>
   <nav class="menu">
-    <a href="{{ url_for('pagina_forca') }}" class="{{ 'ativo' if pagina == 'forca' }}">Forca</a>
+    <a href="{{ url_for('inicio') }}" class="{{ 'ativo' if pagina == 'inicio' }}">Início</a>
+    {% for exercicio in exercicios %}
+      {% if exercicio.rota %}
+        <a href="{{ url_for(exercicio.rota) }}" class="{{ 'ativo' if pagina == 'forca' and exercicio.rota == 'pagina_forca' }}">{{ exercicio.nome }}</a>
+      {% else %}
+        <span class="desativado" title="Em breve">{{ exercicio.nome }}</span>
+      {% endif %}
+    {% endfor %}
   </nav>
   <main>
     {% block conteudo %}{% endblock %}

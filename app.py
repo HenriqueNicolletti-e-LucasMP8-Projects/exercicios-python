@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, render_template, request, session
 
 from src import forca
 
@@ -14,9 +14,21 @@ def estado_da_sessao():
     return session["forca"]
 
 
+EXERCICIOS = [
+    {"nome": "Forca", "descricao": "Adivinhe a palavra letra por letra antes que o boneco seja enforcado.", "rota": "pagina_forca"},
+    {"nome": "Conversor", "descricao": "Converta km↔milhas, °C↔°F e real↔dólar.", "rota": None},
+    {"nome": "Gerador de senhas", "descricao": "Gere senhas escolhendo tamanho e tipos de caractere.", "rota": None},
+]
+
+
+@app.context_processor
+def injetar_exercicios():
+    return {"exercicios": EXERCICIOS}
+
+
 @app.route("/")
 def inicio():
-    return redirect(url_for("pagina_forca"))
+    return render_template("inicio.html", pagina="inicio")
 
 
 @app.route("/forca")

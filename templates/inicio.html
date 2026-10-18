@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Exercícios Python{% endblock %}
+
+{% block conteudo %}
+<section class="inicio">
+  <h1>Exercícios Python</h1>
+  <p>Escolha um exercício para começar.</p>
+
+  <div class="cartoes">
+    {% for exercicio in exercicios %}
+      {% if exercicio.rota %}
+        <a class="cartao" href="{{ url_for(exercicio.rota) }}">
+          <h2>{{ exercicio.nome }}</h2>
+          <p>{{ exercicio.descricao }}</p>
+        </a>
+      {% else %}
+        <div class="cartao em-breve" aria-disabled="true">
+          <h2>{{ exercicio.nome }}</h2>
+          <p>{{ exercicio.descricao }}</p>
+          <span class="selo">Em breve</span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
