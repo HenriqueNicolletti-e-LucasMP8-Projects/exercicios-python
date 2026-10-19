@@ -23,8 +23,8 @@ Cada item numa branch nova, combinando entre os devs para não repetir trabalho:
 1. ~~Forca: mais palavras, placar e dificuldade~~ (feito, branch `melhoria-forca`).
 2. ~~Gerador de senhas: indicador de força e várias senhas de uma vez~~ (feito, branch `melhoria-senhas`).
 3. ~~Conversor: botão de inverter a conversão e histórico~~ (feito, branch `melhoria-conversor`).
-4. Testes das rotas do Flask (client de teste).
-5. Página 404.
+4. ~~Testes das rotas do Flask (client de teste)~~ (feito, `tests/test_rotas.py`).
+5. ~~Página 404~~ (feito, `templates/404.html`).
 6. Capturas de tela no README.
 
 # Estrutura
@@ -35,7 +35,7 @@ src/conversor.py    # lógica do conversor
 src/senhas.py       # lógica do gerador de senhas
 templates/          # HTML (base.html, inicio.html, um por exercício)
 static/             # CSS e JS (estilo.css, um .js por exercício)
-tests/              # testes pytest (um test_*.py por exercício)
+tests/              # testes pytest (um test_*.py por exercício + test_rotas.py para as rotas)
 ```
 
 # Como adicionar um exercício

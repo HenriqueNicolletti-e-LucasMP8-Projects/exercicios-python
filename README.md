@@ -41,7 +41,7 @@ Depois abra <http://127.0.0.1:5000> no navegador.
 pytest
 ```
 
-Os testes ficam em `tests/` e cobrem a lógica de cada exercício, sem depender do Flask.
+Os testes ficam em `tests/`: um arquivo por exercício para a lógica (sem depender do Flask) e `test_rotas.py` para as páginas, a API e a página 404.
 
 ## Estrutura do projeto
 

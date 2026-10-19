@@ -120,5 +120,12 @@ def api_senhas_gerar():
     return jsonify({"senhas": [{"senha": s, "forca": senhas.avaliar_forca(s)} for s in lista]})
 
 
+@app.errorhandler(404)
+def pagina_nao_encontrada(erro):
+    if request.path.startswith("/api/"):
+        return jsonify({"erro": "Rota não encontrada."}), 404
+    return render_template("404.html", pagina="404"), 404
+
+
 if __name__ == "__main__":
     app.run(debug=True)
