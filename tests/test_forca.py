@@ -5,12 +5,56 @@ from src import forca
 
 def test_novo_jogo_comeca_vazio():
     estado = forca.novo_jogo("python")
-    assert estado == {"palavra": "python", "letras_certas": [], "letras_erradas": []}
+    assert estado == {
+        "palavra": "python",
+        "categoria": "Programação",
+        "dificuldade": "aleatoria",
+        "letras_certas": [],
+        "letras_erradas": [],
+    }
     assert forca.situacao(estado) == "jogando"
 
 
-def test_sortear_palavra_vem_da_lista():
-    assert forca.sortear_palavra() in forca.PALAVRAS
+def test_sortear_palavra_vem_da_lista_com_a_categoria_certa():
+    categoria, palavra = forca.sortear_palavra()
+    assert palavra in forca.PALAVRAS[categoria]
+
+
+@pytest.mark.parametrize("dificuldade", ["facil", "medio", "dificil"])
+def test_sortear_respeita_a_faixa_de_tamanho(dificuldade):
+    minimo, maximo = forca.DIFICULDADES[dificuldade]
+    for _ in range(100):
+        _, palavra = forca.sortear_palavra(dificuldade)
+        assert minimo <= len(palavra) <= maximo
+
+
+@pytest.mark.parametrize("dificuldade", ["facil", "medio", "dificil"])
+def test_cada_dificuldade_tem_palavras_suficientes(dificuldade):
+    minimo, maximo = forca.DIFICULDADES[dificuldade]
+    palavras = [p for ps in forca.PALAVRAS.values() for p in ps if minimo <= len(p) <= maximo]
+    assert len(palavras) >= 5
+
+
+def test_dificuldade_desconhecida():
+    with pytest.raises(ValueError):
+        forca.sortear_palavra("impossivel")
+    with pytest.raises(ValueError):
+        forca.novo_jogo(dificuldade="impossivel")
+
+
+def test_palavras_sao_minusculas_sem_acento_e_sem_repeticao():
+    todas = [p for ps in forca.PALAVRAS.values() for p in ps]
+    assert len(todas) == len(set(todas))
+    assert all(p.isascii() and p.isalpha() and p.islower() for p in todas)
+
+
+def test_placar_conta_vitorias_e_derrotas():
+    placar = forca.novo_placar()
+    forca.registrar_resultado(placar, "venceu")
+    forca.registrar_resultado(placar, "venceu")
+    forca.registrar_resultado(placar, "perdeu")
+    forca.registrar_resultado(placar, "jogando")
+    assert placar == {"vitorias": 2, "derrotas": 1}
 
 
 def test_montar_exibicao_esconde_letras_nao_descobertas():
@@ -74,6 +118,7 @@ def test_estado_publico_esconde_palavra_durante_o_jogo():
     publico = forca.estado_publico(estado)
     assert publico["palavra"] is None
     assert publico["exibicao"] == "C _ _ _"
+    assert publico["dificuldade"] == "aleatoria"
 
 
 def test_estado_publico_revela_palavra_ao_perder():

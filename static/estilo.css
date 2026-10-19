@@ -184,6 +184,18 @@ button:disabled { cursor: default; opacity: 0.7; }
   margin: 8px 0;
 }
 
+.forca-topo { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: center; }
+.forca-topo select {
+  font: inherit;
+  padding: 6px;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+.placar { flex-basis: 100%; margin: 0; font-weight: 600; }
+.dica { margin: 8px 0 0; color: var(--texto-suave); }
+
 .erros { margin: 4px 0; }
 
 .teclado {

@@ -5,6 +5,17 @@
 <section class="forca">
   <h1>Jogo da Forca</h1>
 
+  <div class="forca-topo">
+    <label for="dificuldade">Dificuldade</label>
+    <select id="dificuldade">
+      <option value="aleatoria">Aleatória</option>
+      <option value="facil">Fácil (até 6 letras)</option>
+      <option value="medio">Média (7 a 8 letras)</option>
+      <option value="dificil">Difícil (9+ letras)</option>
+    </select>
+    <p id="placar" class="placar" aria-live="polite"></p>
+  </div>
+
   <svg id="boneco" viewBox="0 0 240 260" width="240" height="260" aria-label="Forca">
     <g class="estrutura">
       <line x1="30" y1="240" x2="150" y2="240"/>
@@ -22,6 +33,7 @@
     </g>
   </svg>
 
+  <p id="dica" class="dica"></p>
   <p id="palavra" class="palavra" aria-live="polite"></p>
   <p id="erros" class="erros"></p>
   <p id="mensagem" class="mensagem" aria-live="polite"></p>
