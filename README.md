@@ -8,7 +8,7 @@ Site com três exercícios básicos de Python, escolhidos por uma tela inicial e
 |---|---|---|
 | **Forca** | Sorteia uma palavra e mostra `_ _ _`. Você escolhe letras por botões ou pelo teclado, vê o boneco sendo desenhado a cada erro e recebe o aviso de vitória ou derrota. Tem o botão "Novo jogo". | Pronto |
 | **Conversor** | Converte km↔milhas, °C↔°F e real↔dólar (cotação fixa), com uma função por conversão e tratamento de entrada inválida. | Em breve |
-| **Gerador de senhas** | Pede o tamanho e os tipos de caractere (maiúsculas, números, símbolos), valida a entrada e gera a senha. | Em breve |
+| **Gerador de senhas** | Pede o tamanho e os tipos de caractere (minúsculas, maiúsculas, números, símbolos), valida a entrada e gera a senha, com botão para copiar. | Pronto |
 
 ## Como rodar
 
@@ -47,7 +47,8 @@ Os testes ficam em `tests/` e cobrem a lógica de cada exercício, sem depender 
 app.py              # rotas Flask
 src/                # lógica dos exercícios (não conhece o Flask)
   forca.py
-templates/          # páginas HTML (base, início e Forca)
+  senhas.py
+templates/          # páginas HTML (base, início e um por exercício)
 static/             # CSS e JavaScript
 tests/              # testes com pytest
 ```
