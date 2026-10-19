@@ -14,15 +14,15 @@ Este repositório é um site com 3 exercícios, escolhidos por um menu de navega
 # Status
 - Forca: pronta (branch `forca`, já na `main`).
 - Tela inicial com os 3 cartões: pronta.
+- Gerador de senhas: pronto (branch `gerador-senhas`, já na `main`).
 - Conversor: pronto (branch `conversor`).
-- Gerador de senhas (branch `gerador-senhas`): ainda não feito; aparece como "Em breve" na home.
 
 # Estrutura
 ```
 app.py              # rotas Flask e lista EXERCICIOS
 src/forca.py        # lógica da forca
 src/conversor.py    # lógica do conversor
-src/senhas.py       # lógica do gerador de senhas (a criar)
+src/senhas.py       # lógica do gerador de senhas
 templates/          # HTML (base.html, inicio.html, um por exercício)
 static/             # CSS e JS (estilo.css, um .js por exercício)
 tests/              # testes pytest (um test_*.py por exercício)
@@ -43,7 +43,7 @@ Seguir o padrão da Forca (`src/forca.py`, `templates/forca.html`, `static/forca
 - Nunca commitar `.env` ou chaves.
 
 # Trabalho em dupla
-- Cada exercício tem uma branch separada, criada a partir da `main` atualizada (`git pull` antes).
+- Cada tela nova (exercício ou página como a home) tem uma branch nova, criada a partir da `main` atualizada (`git pull` antes).
 - Não fazer push direto na `main`: abrir pull request e deixar a outra pessoa revisar.
 - Dividir os exercícios entre as pessoas para não editar o mesmo arquivo ao mesmo tempo. O ponto de conflito esperado é a lista `EXERCICIOS` em `app.py`: resolver mantendo as duas alterações.
 - Cada pessoa commita com o próprio nome do git. Perguntar em qual nome o commit ficará antes de commitar.

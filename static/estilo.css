@@ -136,4 +136,41 @@ button.errada { background: #ef9a9a; }
 .resultado { min-height: 1.5em; font-size: 1.5rem; font-weight: bold; color: var(--certo); }
 .observacao { font-size: 0.85rem; color: #555; }
 
+.senhas h1 { text-align: center; }
+
+#form-senha { display: flex; flex-direction: column; gap: 12px; }
+
+#form-senha input[type="number"] {
+  font: inherit;
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+
+#form-senha fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+#gerar { padding: 10px 20px; background: var(--destaque); color: #fff; border-color: var(--destaque); }
+
+.resultado-senha { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+
+.senha {
+  flex: 1;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: Consolas, monospace;
+  font-size: 1.1rem;
+  word-break: break-all;
+}
+
+.resultado-senha button { padding: 10px 14px; }
+
 #novo-jogo { padding: 8px 20px; background: var(--destaque); color: #fff; border-color: var(--destaque); }
