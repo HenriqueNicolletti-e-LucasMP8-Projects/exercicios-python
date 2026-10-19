@@ -6,6 +6,7 @@
   --borda: #d0d0d0;
   --certo: #2e7d32;
   --erro: #c62828;
+  --aviso: #ef6c00;
   --destaque: #1565c0;
   --sobre-destaque: #ffffff;
   --tecla-certa: #a5d6a7;
@@ -23,6 +24,7 @@
     --borda: #3a4048;
     --certo: #66bb6a;
     --erro: #ef5350;
+    --aviso: #ffa726;
     --destaque: #4f8fe0;
     --sobre-destaque: #0b0d10;
     --tecla-certa: #2e5d31;
@@ -40,6 +42,7 @@
   --borda: #3a4048;
   --certo: #66bb6a;
   --erro: #ef5350;
+  --aviso: #ffa726;
   --destaque: #4f8fe0;
   --sobre-destaque: #0b0d10;
   --tecla-certa: #2e5d31;
@@ -216,7 +219,23 @@ button.errada { background: var(--tecla-errada); }
 /* Gerador de senhas */
 .senhas { text-align: center; }
 
-.resultado-senha { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+.opcao { display: flex; gap: 6px; align-items: center; }
+
+.lista-senhas { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+
+.item-senha {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 8px;
+  align-items: center;
+}
+
+.item-senha .forca { grid-column: 1; text-align: left; font-size: 0.85rem; font-weight: 600; }
+.item-senha button { grid-column: 2; grid-row: 1 / span 2; }
+
+.forca-fraca { color: var(--erro); }
+.forca-media { color: var(--aviso); }
+.forca-forte, .forca-muito_forte { color: var(--certo); }
 
 .senha {
   flex: 1;
@@ -229,7 +248,7 @@ button.errada { background: var(--tecla-errada); }
   word-break: break-all;
 }
 
-.resultado-senha button { padding: 10px 14px; }
+.item-senha button { padding: 10px 14px; }
 
 @media (max-width: 420px) {
   .teclado { grid-template-columns: repeat(7, 1fr); }

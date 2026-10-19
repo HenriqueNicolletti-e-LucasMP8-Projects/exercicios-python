@@ -101,6 +101,7 @@ def pagina_senhas():
     return render_template(
         "senhas.html", pagina="senhas",
         tamanho_minimo=senhas.TAMANHO_MINIMO, tamanho_maximo=senhas.TAMANHO_MAXIMO,
+        quantidade_maxima=senhas.QUANTIDADE_MAXIMA,
     )
 
 
@@ -111,10 +112,12 @@ def api_senhas_gerar():
     if not isinstance(tipos, list):
         return jsonify({"erro": "Os tipos de caractere devem ser uma lista."}), 400
     try:
-        senha = senhas.gerar_senha(dados.get("tamanho"), tipos)
+        lista = senhas.gerar_varias(
+            dados.get("tamanho"), tipos, dados.get("quantidade", 1), bool(dados.get("sem_parecidos", False)),
+        )
     except ValueError as erro:
         return jsonify({"erro": str(erro)}), 400
-    return jsonify({"senha": senha})
+    return jsonify({"senhas": [{"senha": s, "forca": senhas.avaliar_forca(s)} for s in lista]})
 
 
 if __name__ == "__main__":
