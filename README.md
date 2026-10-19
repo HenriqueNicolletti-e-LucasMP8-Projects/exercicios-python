@@ -12,6 +12,36 @@ Site com três exercícios básicos de Python, escolhidos por uma tela inicial e
 
 O site tem tema claro e escuro: ele segue o tema do sistema e há um botão no menu para trocar, com a escolha salva no navegador.
 
+## Capturas de tela
+
+### Início
+
+| Tema claro | Tema escuro |
+|---|---|
+| ![Início no tema claro](docs/HomeBranca.png) | ![Início no tema escuro](docs/HomePreta.png) |
+
+### Forca
+
+| Tema claro | Tema escuro |
+|---|---|
+| ![Forca no tema claro](docs/ForcaBranca.png) | ![Forca no tema escuro](docs/ForcaPreta.png) |
+
+### Conversor
+
+| Tema claro | Tema escuro |
+|---|---|
+| ![Conversor no tema claro](docs/ConversorBranco.png) | ![Conversor no tema escuro](docs/ConversorPreto.png) |
+
+### Gerador de senhas
+
+| Tema claro | Tema escuro |
+|---|---|
+| ![Gerador de senhas no tema claro](docs/GeradorSenhaBranco.png) | ![Gerador de senhas no tema escuro](docs/GeradorSenhaPreto.png) |
+
+### Página 404
+
+![Página 404 no tema escuro](docs/404.png)
+
 ## Como rodar
 
 Requisitos: Python 3.10 ou superior.
