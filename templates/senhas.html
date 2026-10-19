@@ -9,6 +9,9 @@
     <label for="tamanho">Tamanho da senha</label>
     <input id="tamanho" name="tamanho" type="number" min="{{ tamanho_minimo }}" max="{{ tamanho_maximo }}" value="12" inputmode="numeric">
 
+    <label for="quantidade">Quantidade de senhas</label>
+    <input id="quantidade" name="quantidade" type="number" min="1" max="{{ quantidade_maxima }}" value="1" inputmode="numeric">
+
     <fieldset>
       <legend>Tipos de caractere</legend>
       <label><input type="checkbox" name="tipos" value="minusculas" checked> Minúsculas (a–z)</label>
@@ -17,15 +20,14 @@
       <label><input type="checkbox" name="tipos" value="simbolos"> Símbolos (!@#$…)</label>
     </fieldset>
 
+    <label class="opcao"><input type="checkbox" name="sem_parecidos"> Evitar caracteres parecidos (0, O, 1, l, I)</label>
+
     <button id="gerar" type="submit">Gerar senha</button>
   </form>
 
   <p id="mensagem-senha" class="mensagem" aria-live="polite"></p>
 
-  <div id="resultado-senha" class="resultado-senha" hidden>
-    <output id="senha" class="senha"></output>
-    <button id="copiar" type="button">Copiar</button>
-  </div>
+  <ul id="lista-senhas" class="lista-senhas"></ul>
 </section>
 {% endblock %}
 
