@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, jsonify, render_template, request, session
 
-from src import forca
+from src import conversor, forca
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "chave-apenas-para-desenvolvimento")
@@ -16,7 +16,7 @@ def estado_da_sessao():
 
 EXERCICIOS = [
     {"nome": "Forca", "descricao": "Adivinhe a palavra letra por letra antes que o boneco seja enforcado.", "rota": "pagina_forca"},
-    {"nome": "Conversor", "descricao": "Converta km↔milhas, °C↔°F e real↔dólar.", "rota": None},
+    {"nome": "Conversor", "descricao": "Converta km↔milhas, °C↔°F e real↔dólar.", "rota": "pagina_conversor"},
     {"nome": "Gerador de senhas", "descricao": "Gere senhas escolhendo tamanho e tipos de caractere.", "rota": None},
 ]
 
@@ -57,6 +57,26 @@ def api_forca_letra():
         return jsonify({"erro": str(erro), **forca.estado_publico(estado)}), 400
     session["forca"] = estado
     return jsonify(forca.estado_publico(estado))
+
+
+@app.route("/conversor")
+def pagina_conversor():
+    return render_template(
+        "conversor.html",
+        pagina="conversor",
+        opcoes=conversor.opcoes(),
+        cotacao=conversor.formatar(conversor.COTACAO_DOLAR),
+    )
+
+
+@app.post("/api/conversor")
+def api_conversor():
+    dados = request.get_json(silent=True) or {}
+    try:
+        resposta = conversor.converter(str(dados.get("tipo", "")), str(dados.get("valor", "")))
+    except ValueError as erro:
+        return jsonify({"erro": str(erro)}), 400
+    return jsonify(resposta)
 
 
 if __name__ == "__main__":
