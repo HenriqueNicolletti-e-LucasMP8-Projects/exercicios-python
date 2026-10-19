@@ -10,13 +10,15 @@ Site com três exercícios básicos de Python, escolhidos por uma tela inicial e
 | **Conversor** | Converte km↔milhas, °C↔°F e real↔dólar (cotação fixa), com uma função por conversão e tratamento de entrada inválida. | Pronto |
 | **Gerador de senhas** | Pede o tamanho e os tipos de caractere (minúsculas, maiúsculas, números, símbolos), valida a entrada e gera a senha, com botão para copiar. | Pronto |
 
+O site tem tema claro e escuro: ele segue o tema do sistema e há um botão no menu para trocar, com a escolha salva no navegador.
+
 ## Como rodar
 
 Requisitos: Python 3.10 ou superior.
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/HenriqueNicolletti/exercicios-python.git
+git clone https://github.com/HenriqueNicolletti-e-LucasMP8-Projects/exercicios-python.git
 cd exercicios-python
 
 # 2. (Opcional) criar um ambiente virtual
@@ -50,7 +52,7 @@ src/                # lógica dos exercícios (não conhece o Flask)
   conversor.py
   senhas.py
 templates/          # páginas HTML (base, início e um por exercício)
-static/             # CSS e JavaScript
+static/             # CSS e JavaScript (inclui o tema claro/escuro)
 tests/              # testes com pytest
 ```
 
