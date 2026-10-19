@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Página não encontrada{% endblock %}
+
+{% block conteudo %}
+<section class="erro-pagina">
+  <h1>404</h1>
+  <p>Não encontramos a página que você procurou.</p>
+  <p><a class="botao-link" href="{{ url_for('inicio') }}">Voltar para o início</a></p>
+</section>
+{% endblock %}
