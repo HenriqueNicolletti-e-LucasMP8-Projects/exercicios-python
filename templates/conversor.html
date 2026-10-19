@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Conversor{% endblock %}
+
+{% block conteudo %}
+<section class="conversor">
+  <h1>Conversor</h1>
+
+  <form id="form-conversor" class="formulario" novalidate>
+    <label for="tipo">Conversão</label>
+    <select id="tipo" name="tipo">
+      {% for opcao in opcoes %}
+        <option value="{{ opcao.tipo }}">{{ opcao.nome }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="valor">Valor</label>
+    <input id="valor" name="valor" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10 ou 2,5">
+
+    <button type="submit">Converter</button>
+  </form>
+
+  <p id="resultado" class="resultado" aria-live="polite"></p>
+  <p id="mensagem" class="mensagem erro" aria-live="polite"></p>
+
+  <p class="observacao">Cotação fixa: US$ 1 = R$ {{ cotacao }}</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='conversor.js') }}"></script>
+{% endblock %}
