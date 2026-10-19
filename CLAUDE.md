@@ -3,7 +3,7 @@ Este repositório é um site com 3 exercícios, escolhidos por um menu de navega
 
 - **Forca**: sorteia uma palavra de uma lista e mostra `_ _ _`. O usuário escolhe letras (botões ou teclado), a tela mostra os erros e o boneco, avisa vitória ou derrota e tem o botão "Novo jogo".
 - **Conversor**: seleção entre pelo menos 3 tipos (km↔milhas, °C↔°F, real↔dólar com cotação fixa). Uma função por conversão, e entrada inválida mostra mensagem na tela.
-- **Gerador de senhas**: formulário com o tamanho e os tipos de caractere (maiúsculas, números, símbolos). Valida a entrada e mostra a senha gerada.
+- **Gerador de senhas**: formulário com o tamanho e os tipos de caractere (minúsculas, maiúsculas, números, símbolos). Valida a entrada e mostra a senha gerada, com botão para copiar.
 
 # Stack
 - Python 3 + Flask (rotas e lógica)
@@ -15,7 +15,17 @@ Este repositório é um site com 3 exercícios, escolhidos por um menu de navega
 - Forca: pronta (branch `forca`, já na `main`).
 - Tela inicial com os 3 cartões: pronta.
 - Gerador de senhas: pronto (branch `gerador-senhas`, já na `main`).
-- Conversor: pronto (branch `conversor`).
+- Conversor: pronto (branch `conversor`, já na `main`).
+- Melhoria visual (tema claro/escuro com botão no menu, estilos unificados): branch `melhoria-visual`, já na `main`.
+
+# Próximas melhorias
+Cada item numa branch nova, combinando entre os devs para não repetir trabalho:
+1. Forca: mais palavras, placar e dificuldade.
+2. Gerador de senhas: indicador de força e várias senhas de uma vez.
+3. Conversor: botão de inverter a conversão e histórico.
+4. Testes das rotas do Flask (client de teste).
+5. Página 404.
+6. Capturas de tela no README.
 
 # Estrutura
 ```
