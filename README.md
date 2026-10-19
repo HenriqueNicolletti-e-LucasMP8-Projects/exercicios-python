@@ -7,7 +7,7 @@ Site com três exercícios básicos de Python, escolhidos por uma tela inicial e
 | Exercício | O que faz | Status |
 |---|---|---|
 | **Forca** | Sorteia uma palavra e mostra `_ _ _`. Você escolhe letras por botões ou pelo teclado, vê o boneco sendo desenhado a cada erro e recebe o aviso de vitória ou derrota. Tem dica de categoria, três níveis de dificuldade (pelo tamanho da palavra), placar de vitórias e derrotas da sessão e o botão "Novo jogo". | Pronto |
-| **Conversor** | Converte km↔milhas, °C↔°F e real↔dólar (cotação fixa), com uma função por conversão e tratamento de entrada inválida. | Pronto |
+| **Conversor** | Converte km↔milhas, °C↔°F e real↔dólar (cotação fixa), com uma função por conversão, tratamento de entrada inválida, botão para inverter a conversão e histórico das últimas 5 conversões. | Pronto |
 | **Gerador de senhas** | Pede o tamanho e os tipos de caractere (minúsculas, maiúsculas, números, símbolos), valida a entrada e gera uma ou várias senhas (até 10), com indicador de força, opção de evitar caracteres parecidos e botão para copiar. | Pronto |
 
 O site tem tema claro e escuro: ele segue o tema do sistema e há um botão no menu para trocar, com a escolha salva no navegador.

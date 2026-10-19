@@ -9,9 +9,11 @@
     <label for="tipo">Conversão</label>
     <select id="tipo" name="tipo">
       {% for opcao in opcoes %}
-        <option value="{{ opcao.tipo }}">{{ opcao.nome }}</option>
+        <option value="{{ opcao.tipo }}" data-inverso="{{ opcao.inverso }}">{{ opcao.nome }}</option>
       {% endfor %}
     </select>
+
+    <button id="inverter" type="button" class="secundario">⇄ Inverter conversão</button>
 
     <label for="valor">Valor</label>
     <input id="valor" name="valor" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 10 ou 2,5">
@@ -21,6 +23,12 @@
 
   <p id="resultado" class="resultado" aria-live="polite"></p>
   <p id="mensagem" class="mensagem erro" aria-live="polite"></p>
+
+  <section class="historico" id="historico" hidden>
+    <h2>Últimas conversões</h2>
+    <ul id="lista-historico"></ul>
+    <button id="limpar-historico" type="button" class="secundario">Limpar histórico</button>
+  </section>
 
   <p class="observacao">Cotação fixa: US$ 1 = R$ {{ cotacao }}</p>
 </section>
