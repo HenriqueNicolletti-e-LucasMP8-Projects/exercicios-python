@@ -1,6 +1,9 @@
 const LETRAS = "abcdefghijklmnopqrstuvwxyz".split("");
 
 const elPalavra = document.getElementById("palavra");
+const elDica = document.getElementById("dica");
+const elPlacar = document.getElementById("placar");
+const elDificuldade = document.getElementById("dificuldade");
 const elErros = document.getElementById("erros");
 const elMensagem = document.getElementById("mensagem");
 const elTeclado = document.getElementById("teclado");
@@ -29,6 +32,9 @@ function atualizarTela(estado) {
   jogoAcabou = estado.situacao !== "jogando";
 
   elPalavra.textContent = estado.exibicao;
+  elDica.textContent = estado.categoria ? `Dica: ${estado.categoria} (${estado.exibicao.split(" ").length} letras)` : "";
+  elDificuldade.value = estado.dificuldade;
+  elPlacar.textContent = `Vitórias: ${estado.placar.vitorias}   Derrotas: ${estado.placar.derrotas}`;
   elErros.textContent =
     `Erros: ${estado.erros}/${estado.max_erros}   Letras erradas: ` +
     estado.letras_erradas.map((l) => l.toUpperCase()).join(" ");
@@ -73,7 +79,15 @@ async function tentarLetra(letra) {
 }
 
 async function novoJogo() {
-  const { dados } = await chamarApi("/api/forca/novo", { method: "POST" });
+  const { ok, dados } = await chamarApi("/api/forca/novo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ dificuldade: elDificuldade.value }),
+  });
+  if (!ok) {
+    mostrarMensagem(dados.erro, "erro");
+    return;
+  }
   atualizarTela(dados);
   mostrarMensagem("Escolha uma letra");
 }
@@ -90,6 +104,7 @@ document.addEventListener("keydown", (evento) => {
   if (letra in botoes) tentarLetra(letra);
 });
 document.getElementById("novo-jogo").addEventListener("click", novoJogo);
+elDificuldade.addEventListener("change", novoJogo);
 
 montarTeclado();
 carregar();

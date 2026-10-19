@@ -14,6 +14,16 @@ def estado_da_sessao():
     return session["forca"]
 
 
+def placar_da_sessao():
+    if "forca_placar" not in session:
+        session["forca_placar"] = forca.novo_placar()
+    return session["forca_placar"]
+
+
+def resposta_forca(estado):
+    return jsonify({**forca.estado_publico(estado), "placar": placar_da_sessao()})
+
+
 EXERCICIOS = [
     {"nome": "Forca", "descricao": "Adivinhe a palavra letra por letra antes que o boneco seja enforcado.", "rota": "pagina_forca"},
     {"nome": "Conversor", "descricao": "Converta km↔milhas, °C↔°F e real↔dólar.", "rota": "pagina_conversor"},
@@ -38,13 +48,17 @@ def pagina_forca():
 
 @app.get("/api/forca")
 def api_forca_estado():
-    return jsonify(forca.estado_publico(estado_da_sessao()))
+    return resposta_forca(estado_da_sessao())
 
 
 @app.post("/api/forca/novo")
 def api_forca_novo():
-    session["forca"] = forca.novo_jogo()
-    return jsonify(forca.estado_publico(session["forca"]))
+    dados = request.get_json(silent=True) or {}
+    try:
+        session["forca"] = forca.novo_jogo(dificuldade=str(dados.get("dificuldade", "aleatoria")))
+    except ValueError as erro:
+        return jsonify({"erro": str(erro)}), 400
+    return resposta_forca(session["forca"])
 
 
 @app.post("/api/forca/letra")
@@ -54,9 +68,12 @@ def api_forca_letra():
     try:
         forca.tentar_letra(estado, str(dados.get("letra", "")))
     except ValueError as erro:
-        return jsonify({"erro": str(erro), **forca.estado_publico(estado)}), 400
+        return jsonify({"erro": str(erro), **forca.estado_publico(estado), "placar": placar_da_sessao()}), 400
     session["forca"] = estado
-    return jsonify(forca.estado_publico(estado))
+    resultado = forca.situacao(estado)
+    if resultado != "jogando":
+        session["forca_placar"] = forca.registrar_resultado(placar_da_sessao(), resultado)
+    return resposta_forca(estado)
 
 
 @app.route("/conversor")
