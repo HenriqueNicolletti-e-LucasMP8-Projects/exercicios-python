@@ -11,6 +11,7 @@ const partes = document.querySelectorAll("#boneco .partes > *");
 
 const botoes = {};
 let jogoAcabou = false;
+let ocupado = false; // uma requisição por vez: a sessão fica no cookie e respostas fora de ordem perdem jogadas
 
 function montarTeclado() {
   for (const letra of LETRAS) {
@@ -63,33 +64,44 @@ async function chamarApi(url, opcoes) {
 }
 
 async function tentarLetra(letra) {
-  if (jogoAcabou || botoes[letra].disabled) return;
-  const { ok, dados } = await chamarApi("/api/forca/letra", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ letra }),
-  });
-  atualizarTela(dados);
-  if (!ok) {
-    mostrarMensagem(dados.erro, "erro");
-  } else if (dados.situacao === "jogando") {
-    const acertou = dados.letras_certas.includes(letra);
-    mostrarMensagem(acertou ? "Acertou!" : "Letra errada!", acertou ? "ok" : "erro");
+  if (ocupado || jogoAcabou || botoes[letra].disabled) return;
+  ocupado = true;
+  try {
+    const { ok, dados } = await chamarApi("/api/forca/letra", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ letra }),
+    });
+    atualizarTela(dados);
+    if (!ok) {
+      mostrarMensagem(dados.erro, "erro");
+    } else if (dados.situacao === "jogando") {
+      const acertou = dados.letras_certas.includes(letra);
+      mostrarMensagem(acertou ? "Acertou!" : "Letra errada!", acertou ? "ok" : "erro");
+    }
+  } finally {
+    ocupado = false;
   }
 }
 
 async function novoJogo() {
-  const { ok, dados } = await chamarApi("/api/forca/novo", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ dificuldade: elDificuldade.value }),
-  });
-  if (!ok) {
-    mostrarMensagem(dados.erro, "erro");
-    return;
+  if (ocupado) return;
+  ocupado = true;
+  try {
+    const { ok, dados } = await chamarApi("/api/forca/novo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dificuldade: elDificuldade.value }),
+    });
+    if (!ok) {
+      mostrarMensagem(dados.erro, "erro");
+      return;
+    }
+    atualizarTela(dados);
+    mostrarMensagem("Escolha uma letra");
+  } finally {
+    ocupado = false;
   }
-  atualizarTela(dados);
-  mostrarMensagem("Escolha uma letra");
 }
 
 async function carregar() {
@@ -100,11 +112,16 @@ async function carregar() {
 
 document.addEventListener("keydown", (evento) => {
   if (evento.ctrlKey || evento.metaKey || evento.altKey) return;
+  // Com o seletor de dificuldade em foco, digitar uma letra trocaria a opção e reiniciaria o jogo.
+  if (["SELECT", "INPUT", "TEXTAREA"].includes(evento.target.tagName)) return;
   const letra = evento.key.toLowerCase();
   if (letra in botoes) tentarLetra(letra);
 });
 document.getElementById("novo-jogo").addEventListener("click", novoJogo);
-elDificuldade.addEventListener("change", novoJogo);
+elDificuldade.addEventListener("change", () => {
+  elDificuldade.blur();
+  novoJogo();
+});
 
 montarTeclado();
 carregar();
