@@ -29,12 +29,12 @@ def dolares_para_reais(dolares):
 
 
 CONVERSOES = {
-    "km_milhas": {"nome": "km → milhas", "funcao": km_para_milhas, "de": "km", "para": "milhas", "aceita_negativo": False},
-    "milhas_km": {"nome": "milhas → km", "funcao": milhas_para_km, "de": "milhas", "para": "km", "aceita_negativo": False},
-    "c_f": {"nome": "°C → °F", "funcao": celsius_para_fahrenheit, "de": "°C", "para": "°F", "aceita_negativo": True},
-    "f_c": {"nome": "°F → °C", "funcao": fahrenheit_para_celsius, "de": "°F", "para": "°C", "aceita_negativo": True},
-    "real_dolar": {"nome": "real → dólar", "funcao": reais_para_dolares, "de": "R$", "para": "US$", "aceita_negativo": False},
-    "dolar_real": {"nome": "dólar → real", "funcao": dolares_para_reais, "de": "US$", "para": "R$", "aceita_negativo": False},
+    "km_milhas": {"nome": "km → milhas", "inverso": "milhas_km", "funcao": km_para_milhas, "de": "km", "para": "milhas", "aceita_negativo": False},
+    "milhas_km": {"nome": "milhas → km", "inverso": "km_milhas", "funcao": milhas_para_km, "de": "milhas", "para": "km", "aceita_negativo": False},
+    "c_f": {"nome": "°C → °F", "inverso": "f_c", "funcao": celsius_para_fahrenheit, "de": "°C", "para": "°F", "aceita_negativo": True},
+    "f_c": {"nome": "°F → °C", "inverso": "c_f", "funcao": fahrenheit_para_celsius, "de": "°F", "para": "°C", "aceita_negativo": True},
+    "real_dolar": {"nome": "real → dólar", "inverso": "dolar_real", "funcao": reais_para_dolares, "de": "R$", "para": "US$", "aceita_negativo": False},
+    "dolar_real": {"nome": "dólar → real", "inverso": "real_dolar", "funcao": dolares_para_reais, "de": "US$", "para": "R$", "aceita_negativo": False},
 }
 
 
@@ -78,4 +78,7 @@ def formatar(numero):
 
 def opcoes():
     """Lista de conversões para montar o seletor na tela."""
-    return [{"tipo": tipo, "nome": conversao["nome"]} for tipo, conversao in CONVERSOES.items()]
+    return [
+        {"tipo": tipo, "nome": conversao["nome"], "inverso": conversao["inverso"]}
+        for tipo, conversao in CONVERSOES.items()
+    ]

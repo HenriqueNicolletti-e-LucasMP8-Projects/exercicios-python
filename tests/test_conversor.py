@@ -71,3 +71,24 @@ def test_opcoes_tem_pelo_menos_tres_tipos():
     tipos = [opcao["tipo"] for opcao in conversor.opcoes()]
     assert len(tipos) >= 3
     assert "km_milhas" in tipos and "c_f" in tipos and "real_dolar" in tipos
+
+
+@pytest.mark.parametrize("tipo", list(conversor.CONVERSOES))
+def test_inverso_aponta_para_a_conversao_contraria(tipo):
+    conversao = conversor.CONVERSOES[tipo]
+    inverso = conversor.CONVERSOES[conversao["inverso"]]
+    assert inverso["inverso"] == tipo
+    assert inverso["de"] == conversao["para"]
+    assert inverso["para"] == conversao["de"]
+
+
+@pytest.mark.parametrize("tipo", list(conversor.CONVERSOES))
+def test_converter_o_resultado_pelo_inverso_volta_ao_valor(tipo):
+    ida = conversor.converter(tipo, "100")
+    volta = conversor.converter(conversor.CONVERSOES[tipo]["inverso"], str(ida["resultado"]))
+    assert volta["resultado"] == pytest.approx(100, abs=0.1)
+
+
+def test_opcoes_trazem_o_inverso_de_cada_conversao():
+    for opcao in conversor.opcoes():
+        assert opcao["inverso"] in conversor.CONVERSOES
