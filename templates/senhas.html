@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}Gerador de senhas{% endblock %}
+
+{% block conteudo %}
+<section class="senhas">
+  <h1>Gerador de senhas</h1>
+
+  <form id="form-senha" novalidate>
+    <label for="tamanho">Tamanho da senha</label>
+    <input id="tamanho" name="tamanho" type="number" min="{{ tamanho_minimo }}" max="{{ tamanho_maximo }}" value="12" inputmode="numeric">
+
+    <fieldset>
+      <legend>Tipos de caractere</legend>
+      <label><input type="checkbox" name="tipos" value="minusculas" checked> Minúsculas (a–z)</label>
+      <label><input type="checkbox" name="tipos" value="maiusculas" checked> Maiúsculas (A–Z)</label>
+      <label><input type="checkbox" name="tipos" value="numeros" checked> Números (0–9)</label>
+      <label><input type="checkbox" name="tipos" value="simbolos"> Símbolos (!@#$…)</label>
+    </fieldset>
+
+    <button id="gerar" type="submit">Gerar senha</button>
+  </form>
+
+  <p id="mensagem-senha" class="mensagem" aria-live="polite"></p>
+
+  <div id="resultado-senha" class="resultado-senha" hidden>
+    <output id="senha" class="senha"></output>
+    <button id="copiar" type="button">Copiar</button>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='senhas.js') }}"></script>
+{% endblock %}

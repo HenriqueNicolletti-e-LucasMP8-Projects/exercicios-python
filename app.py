@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, jsonify, render_template, request, session
 
-from src import forca
+from src import forca, senhas
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "chave-apenas-para-desenvolvimento")
@@ -17,7 +17,7 @@ def estado_da_sessao():
 EXERCICIOS = [
     {"nome": "Forca", "descricao": "Adivinhe a palavra letra por letra antes que o boneco seja enforcado.", "rota": "pagina_forca"},
     {"nome": "Conversor", "descricao": "Converta km↔milhas, °C↔°F e real↔dólar.", "rota": None},
-    {"nome": "Gerador de senhas", "descricao": "Gere senhas escolhendo tamanho e tipos de caractere.", "rota": None},
+    {"nome": "Gerador de senhas", "descricao": "Gere senhas escolhendo tamanho e tipos de caractere.", "rota": "pagina_senhas"},
 ]
 
 
@@ -57,6 +57,27 @@ def api_forca_letra():
         return jsonify({"erro": str(erro), **forca.estado_publico(estado)}), 400
     session["forca"] = estado
     return jsonify(forca.estado_publico(estado))
+
+
+@app.route("/senhas")
+def pagina_senhas():
+    return render_template(
+        "senhas.html", pagina="senhas",
+        tamanho_minimo=senhas.TAMANHO_MINIMO, tamanho_maximo=senhas.TAMANHO_MAXIMO,
+    )
+
+
+@app.post("/api/senhas/gerar")
+def api_senhas_gerar():
+    dados = request.get_json(silent=True) or {}
+    tipos = dados.get("tipos", [])
+    if not isinstance(tipos, list):
+        return jsonify({"erro": "Os tipos de caractere devem ser uma lista."}), 400
+    try:
+        senha = senhas.gerar_senha(dados.get("tamanho"), tipos)
+    except ValueError as erro:
+        return jsonify({"erro": str(erro)}), 400
+    return jsonify({"senha": senha})
 
 
 if __name__ == "__main__":
